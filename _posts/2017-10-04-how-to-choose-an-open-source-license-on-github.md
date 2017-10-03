@@ -31,6 +31,7 @@ github 给予了更多开源许可证的选择, 并且详细注明了权限, 条
 github 推荐项目使用一个开源许可证。详见 [No License](https://choosealicense.com/no-license/)
 
 ### 快速选择
+github 上新建仓库时可选择开源许可证模板, 已有仓库可在根目录下新建LICENSE文件也可选择模板(.gitignore 也可相同操作)
 乌克兰程序员 [Paul Bagwell](http://paulmillr.com/), 画了一张分析图说明应该怎么选择。
 ![Image](/images/posts/2017-10-04-how-to-choose-an-open-source-license-on-github/1.png)
 
