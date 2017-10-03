@@ -35,9 +35,9 @@ github 推荐项目使用一个开源许可证。详见 [No License](https://cho
 ![Image](/images/posts/2017-10-04-how-to-choose-an-open-source-license-on-github/1.png)
 
 >**参考:**  
+[wtfpl](http://www.wtfpl.net/txt/copying/)
 [choose-an-open-source-license](https://choosealicense.com/)  
 [simple-description-of-popular-software-licenses](http://paulmillr.com/posts/simple-description-of-popular-software-licenses/)    
 [如何选择开源许可证](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)  
 [如何为你的代码选择一个开源协议](http://www.cnblogs.com/Wayou/p/how_to_choose_a_license.html)  
 [开源许可证都有什么区别,一般开源项目用什么许可证](https://www.zhihu.com/question/28292322)  
-[WTFPL](http://www.wtfpl.net/txt/copying/) :cookie:  
