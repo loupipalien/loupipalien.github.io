@@ -15,7 +15,7 @@ github pages 被设计为直接从GitHub存储库托管个人、组织或项目�
 ### jekyll 简介以及安装 (本文 jeykll 是在 windows 环境下安装)
 jekyll 是一个简单的博客形态的静态站点生产服务。它有一个模版目录,其中包含原始文本格式的文档, 通过一个转换器(如   Markdown) 和 Liquid 渲染器转化成一个完整的可发布的静态网站, 可以发布在任何的服务器上。  
 **安装 jekyll** ([操作指引](http://jekyll-windows.juthilo.com/))
-- 安装 ruby 和 ruby devkit (后续使用 gem install 命令报错时, 可参考 [risk install](https://github.com/oneclick/rubyinstaller2#using-the-installer-on-a-target-system) 相关)
+- 安装 ruby 和 ruby devkit (后续使用 gem install 命令报错时, 可参考 [ridk install](https://github.com/oneclick/rubyinstaller2#using-the-installer-on-a-target-system) 相关)
 - 安装 jekyll  
 - 安装 rouge 或 pygments 用于高亮 (这一步可选)  
 - 安装 wdm (在安装时遇到了 [error](https://github.com/oneclick/rubyinstaller/issues/276), 发现是因为 ruby 安装了 2.4 版, 而 ruby devkit 只支持到 2.3 版。 所以重装 ruby 和 ruby devkit)  
