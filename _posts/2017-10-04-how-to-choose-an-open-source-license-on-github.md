@@ -14,7 +14,7 @@ Apache 2.0许可证是类似于MIT许可证的一个宽松的许可证,但它同
 使用该许可证的项目: Android, Apache, Swift
 ### 关心共享改进
 GNU GPLv3许可证是一种公共版权的许可证,要求任何贡献代码或衍生工作的人以相同的条件来提供源代码,并且也提供了贡献者向用户提供专利授权相关的条款。  
-使用该许可证的项目：Bash, GIMP, Privacy Badger
+使用该许可证的项目: Bash, GIMP, Privacy Badger
 ### 项目不是代码
 开源软件许可证可用于非软件作品,通常也是最好的选择。尤其是当涉及到的作品可以作为源被编辑和翻译时,例如: 开源硬件设计,选择一个开源许可证。  
 **数据，媒体，等**: CC0-1.0, CC-BY-4.0, CC-BY-SA-4.0 开源许可证可用于数据集到录像等非软件载体。注意 CC-BY-4.0 和 CC-BY-SA-4.0 不能够用于软件  
@@ -33,8 +33,8 @@ github 上新建仓库时可选择开源许可证模板, 已有仓库可在根�
 
 >**参考:**  
 [wtfpl](http://www.wtfpl.net/txt/copying/)  
-[choose-an-open-source-license](https://choosealicense.com/)  
-[simple-description-of-popular-software-licenses](http://paulmillr.com/posts/simple-description-of-popular-software-licenses/)    
+[choose an open source license](https://choosealicense.com/)  
+[simple description of popular software licenses](http://paulmillr.com/posts/simple-description-of-popular-software-licenses/)    
 [如何选择开源许可证](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)  
 [如何为你的代码选择一个开源协议](http://www.cnblogs.com/Wayou/p/how_to_choose_a_license.html)  
 [开源许可证都有什么区别,一般开源项目用什么许可证](https://www.zhihu.com/question/28292322)  
