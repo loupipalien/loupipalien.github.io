@@ -44,7 +44,7 @@ jekyll 是一个简单的博客形态的静态站点生产服务。它有一个�
 [jekyll thumes](http://jekyllthemes.org/)  
 [有哪些简洁明快的 jekyll 模板](https://www.zhihu.com/question/20223939)  
 [using a custom domain with github pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)  
-**TLDR:**  
+**TL;DR:**  
 [如何搭建一个独立博客——简明 github pages与 jekyll 教程](http://www.cnfeat.com/blog/2014/05/10/how-to-build-a-blog/)  
 [github pages + jekyll 创建个人博客](http://www.jianshu.com/p/9535334ffd54)  
 [利用 github pages 快速搭建个人博客](http://www.jianshu.com/p/e68fba58f75c)  
