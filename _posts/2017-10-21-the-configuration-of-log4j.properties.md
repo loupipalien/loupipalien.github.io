@@ -109,8 +109,8 @@ Log4j采用类似C语言中的printf函数的打印格式格式化日志信息, 
 - %20.30c: category名称<20补空格, 并且右对齐, >30字符, 就从左边较远输出的字符截掉
 
 >**参考:**  
-[log4j 1.2 manual](https://logging.apache.org/log4j/1.2/manual.html)
-[log4j 1.2 apidocs](https://logging.apache.org/log4j/1.2/apidocs/index.html)  
+[log4j 1.2 manual](https://logging.apache.org/log4j/1.2/manual.html)  
+[log4j 1.2 apidocs](https://logging.apache.org/log4j/1.2/apidocs/index.html)    
 [log4j.properties配置详解与实例](http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html)  
 [log4j将不同Package的日志输出到不同的文件的方法](http://www.crazyant.net/1931.html)    
 [log4j配置文件中的additivity属性](http://www.cnblogs.com/edgedance/p/6979622.html)  
