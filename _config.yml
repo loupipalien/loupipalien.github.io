@@ -1,5 +1,5 @@
 # Basic
-title: 陈澜天
+title: LTChen
 subtitle: 个人站
 description: 欢迎来到我的个人站~
 # 头像里面的标题
@@ -10,7 +10,7 @@ url: "http://www.loupipalien.com"
 
 # Comment
 comment:
-    disqus: leopard
+    disqus: loupipalien
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
