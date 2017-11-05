@@ -6,7 +6,7 @@ description: "log4j.properties配置详解"
 tag: [java,log4j]
 ---
 
-**前提假设**: 了解log4j组件和简单使用
+**前提假设:** 了解log4j组件和简单使用
 
 ### 优先级
 日志记录的优先级, 分为`OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALL`, Log4j建议只使用四个级别, 优先级从低到高分别是`DEBUG,INFO,WARN,ERROR`。通过定义日志的级别, 可以控制到应用程序中相应级别的日志信息的开关例如在这里定义了INFO级别, 则应用程序中所有DEBUG级别的日志信息将不被输出

@@ -6,7 +6,7 @@ description: "如何使用 github pages 和 jekyll 搭建个人博客"
 tag: [github pages, jekyll]
 ---
 
-**前提假设**: 基本了解 git, github 是什么以及简单操作, 并有 github 账号。  
+**前提假设:** 基本了解 git, github 是什么以及简单操作, 并有 github 账号。  
 
 ### github pages 简介以及建立页面
 github pages 被设计为直接从 github 存储库托管个人、组织或项目页面。要了解更多不同类型的 github 页面站点, 是一个静态站点托管服务。  
