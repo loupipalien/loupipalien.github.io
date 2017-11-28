@@ -8,6 +8,8 @@ tag: [kafka]
 
 **前提假设:** 版本 0.10.2.0
 
+### 配置参数
+
 |Name|Description|Type|Default|Valid Values|Importance|
 |-|-|-|-|-|-|
 |bootstrap.servers|用于建立到 kafka 集群初始连接的一组 host/port 对, 客户端将会使用所有的服务器, 而不会为了引导指定某一台服务器-这个列表仅用于发现全部服务器集合的初始主机; 列表应该形如 `host1:port1,host2:port2,...` 因为这些服务区仅用于初始连接去发现全部的集群成员 (是动态变化的), 这个列表并不需要包含全部的服务器集合 (不过可能需要多个, 以防服务器宕机)|list|-|-|高|
@@ -20,5 +22,7 @@ tag: [kafka]
 |session.timeout.ms|当使用 kafka 的组管理时此值用于探测消费者是否失败; 此消费者周期性地给 broker 发送心跳表示活跃, 如果 broker 在会话超时过期之前没有收到心跳, 接下来 broker 将会从组中移除此消费者并初始化一次负载均衡; 注意此值必须在 broker 配置项 `group.min.session.timeout.ms` 和 `group.max.session.timeout,ms` 配置值所允许地范围内|int|10000|-|高|
 |ssl.key.password|在 key store 文件中私匙地密码, 对于客户端时可选项|password|null|-|高|
 |ssl.keystore.location|key store 文件的位置, 对于客户端是可选项并且此项可用于客户端的双向认证|string|null|-|高|
-|ssl.keystore.password|key store 文件的存储密码, 对于客户端是可选的并且只有在 ssl.keystore.location 被配置时才需要|password|null|-|高|
+|ssl.keystore.password|key store 文件的存储密码, 对于客户端是可选的并且只有在 `ssl.keystore.location` 被配置时才需要|password|null|-|高|
 |ssl.truststore.location|trust store 文件的位置|string|null|-|高|
+|ssl.truststore.password|trust store 文件的存储密码|password|null|-|高|
+|auto.offset.reset|当 kafka 中没有初始的偏移该如何做, 或者当前偏移不存在任何服务器上 (例如: 数据被删除了); `earliest`: 自动重设偏移到最早偏移, `latest`: 自动重设偏移到最新偏移, `none`: 如果对于消费者组没有之前的偏移被发现则抛出异常给消费者, `anything else`: 抛出异常给消费者|string|latest|[earliest,latest,none]|中|
