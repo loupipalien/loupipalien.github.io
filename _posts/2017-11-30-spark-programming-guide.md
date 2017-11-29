@@ -21,7 +21,7 @@ tag: [spark]
     - 本地模式 vs 集群模式
     - 打印一个 RDD 的元素
   - 使用键值对
-  - 转化
+  - 转化  
   以下表格中列举了一些 Spark 支持的常见转化, 详情参考 RDD API 文档 ([Scala](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.rdd.RDD), [Java](https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/api/java/JavaRDD.html), [Pyhton](https://spark.apache.org/docs/latest/api/python/pyspark.html#pyspark.RDD), [R](https://spark.apache.org/docs/latest/api/R/index.html)) 和键值对 RDD 函数文档 ([Scala](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.rdd.PairRDDFunctions), [Java](https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/api/java/JavaPairRDD.html))
 
   |转换|说明|
@@ -47,7 +47,7 @@ tag: [spark]
   |repartition(numPartitions)|-|
   |repartitionAndSortWithinPartitons(partitioner)|-|
 
-  - 处理
+  - 处理  
   以下表格中列举了一些 Spark 支持的常见处理, 详情参考 RDD API 文档 ([Scala](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.rdd.RDD), [Java](https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/api/java/JavaRDD.html), [Pyhton](https://spark.apache.org/docs/latest/api/python/pyspark.html#pyspark.RDD), [R](https://spark.apache.org/docs/latest/api/R/index.html)) 和键值对 RDD 函数文档 ([Scala](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.rdd.PairRDDFunctions), [Java](https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/api/java/JavaPairRDD.html))
 
   |处理|说明|
