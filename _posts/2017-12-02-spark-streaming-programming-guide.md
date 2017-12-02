@@ -123,11 +123,11 @@ $ ./bin/run-example streaming.NetworkWordCount localhost 9999
   可以从 [SparkConf](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.SparkConf) 实例中创建一个 [JavaStreamingContext](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.streaming.StreamingContext)
 
   ```
-  import org.apache.spark._
-  import org.apache.spark.streaming._
-
-  val conf = new SparkConf().setAppName(appName).setMaster(master)
-  val ssc = new StreamingContext(conf, Seconds(1))
+  import org.apache.spark.*;
+  import org.apache.spark.streaming.api.java.*;
+  
+  SparkConf conf = new SparkConf().setAppName(appName).setMaster(master);
+  JavaStreamingContext ssc = new JavaStreamingContext(conf, new Duration(1000));
   ```
   `appName` 参数是你的应用展示在集群 UI 上的名字, `master` 是一个 [Spark, Mesos, YARN](https://spark.apache.org/docs/latest/submitting-applications.html#master-urls) 集群的 URL, 或者是运行在本地模式的特定的 "local[\*]" 字符串; 特别的, 当运行在一个集群上时, 你不会想硬编码 `master` 在程序中, 而是在使用 `spark-submit` 发布应用时在那里接受它; 然而, 对于本地测试或单元测试, 你可以传递 "local[\*]" 去运行 Spark Stremng 程序; 注意这样内部创建的一个 [JavaSparkContext](https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/api/java/JavaSparkContext.html) (Spark 功能的起始点), 它可以作为 `ssc.SparkContext` 被访问
   批量间隔必须基于你应用的延迟要求和可用的集群资源设置, 更多细节见 [Performance Tuning](https://spark.apache.org/docs/latest/streaming-programming-guide.html#setting-the-right-batch-interval) 章节
