@@ -7,7 +7,7 @@ tag: [spark]
 ---
 
 ### 概述
-Spark Streaming 是核心 Spark API 的拓展, 支持可伸缩, 高吞吐, 可容错的实时数据流处理; 可以处理来自如 Kafka, Flume< Kinesis， 或者 TCP 套接字的多种源数据, 可以被使用例如 map, reduce, join 和 window 等高阶函数表达的复杂算法处理; 最后, 处理的数据可以被推送到文件系统, 数据库, 实时仪表盘等; 事实上, 也可以在数据流上应用机器学习和图形处理算法  
+Spark Streaming 是核心 Spark API 的拓展, 支持可伸缩, 高吞吐, 可容错的实时数据流处理; 可以处理来自如 Kafka, Flume, Kinesis， 或者 TCP 套接字的多种源数据, 可以被使用例如 map, reduce, join 和 window 等高阶函数表达的复杂算法处理; 最后, 处理的数据可以被推送到文件系统, 数据库, 实时仪表盘等; 事实上, 也可以在数据流上应用机器学习和图形处理算法  
 [!image](#)  
 
 在内部其工作原理如下, Spark Streaming 接受实时输入数据流并切分成多批, 然后被 Spark 引擎处理后批量生成最终的结果流  
@@ -15,10 +15,11 @@ Spark Streaming 是核心 Spark API 的拓展, 支持可伸缩, 高吞吐, 可�
 
 Spark Streaming 提供一个高阶的抽象被称为离散流或 DStreams, 它代表一个持续的数据流; DStreams 可以从例如 Kafka, Flume, Kinesis等源数据数据流创建, 或者通过应用高阶的操作其他 DStreams; 在内部, 一个 DStreams 被表示为一个序列的 RDDs  
 本指南将展示如何使用 DStreams 开始写 Spark Streaming 程序; 可以使用 Sacla, Java, 或 Python (在 Spark 1.2 引入) 写 Spark Streaming 程序, 都会被展示在本指南中; 可以在本指南中找到选项卡, 可以在不同的语言代码段之间选择  
+**注意:** 有少量 APIs 在 Python 中是不同的或不可用, 在本文中, 你将会发现用 `Python API` 高亮标注了这些不同  
 
-**注意:** 有少量 APIs 在 Python 中是不同的或不可用, 在本文中, 将会发现用 `Python API` 高亮标注了这些不同  
 ### 一个简单的例子
 在讨论如何写你自己的 Spark Streaming 程序的细节之前, 一起来瞥一眼一个简单的 Spark Streaming 程序是什么样子的; 假设我们要计算从监听 TCP 套接字的数据服务器接受的文本数据中的单词数量, 所需要做的如下  
+- Pyhton
 - Scala
 - Java
 
@@ -63,38 +64,39 @@ jssc.start();
 jssc.awaitTermination();
 ```
 全部的代码可以在 Spark Streaming 的例子 [JavaNetWorkCount](https://github.com/apache/spark/blob/v2.2.0/examples/src/main/java/org/apache/spark/examples/streaming/JavaNetworkWordCount.java) 中找到  
-- Pyhton
 
 如果你已经下载并构建了 Spark, 可以按照如下方式运行例子; 你首先需要运行 NetCat (一个可以在大多数类 Unix 系统中找到的小工具) 作为被使用的数据服务器
 ```
 $ nc -lk 9999
 ```
 然后, 在另一个终端, 你可以启动这个例子
+- Pyhton
 - Scala
 - Java
 
 ```
 $ ./bin/run-example streaming.NetworkWordCount localhost 9999
 ```
-- Python
 然后, 任何被输入在运行 netcat 服务器终端中行将会被每秒统计和输出在屏幕上一次, 看起来就像以下这样
+- Python
 - Scala
 - Java
 
 |terminal one (Netcat)|terminal two (JavaNetworkWordCount)|
-|-|-|
+|:--|:--|
 |$ nc -lk 9999 <br> hello world  <br> ...|$ ./bin/run-example streaming.NetworkWordCount localhost 9999 <br> ... <br>  ------------------------------------------- <br> Time: 1357008430000 ms <br> ------------------------------------------- <br> (hello,1) <br> (world,1) <br> ...|
-- Pyhton
 
 ### 基础概念
 接下来, 我们越过这个简单的例子, 详尽的介绍 Spark Streaming 的基础知识
-- 链接
+- **链接**  
 类似于 Spark, Spark Streaming 也可以从 Maven 中央仓库中获得; 为了写出你自己的 Spark Streaming 程序, 你需要将以下的依赖添加到你的 SBT 或 Maven 项目中
   - SBT
+
   ```
   libraryDependencies += "org.apache.spark" % "spark-streaming_2.11" % "2.2.0"
   ```
   - Maven
+
   ```
   <dependency>
     <groupId>org.apache.spark</groupId>
@@ -102,6 +104,7 @@ $ ./bin/run-example streaming.NetworkWordCount localhost 9999
     <version>2.2.0</version>
   </dependency>
   ```
+
 对于处理来自于例如 Kafka, Flume, Kinesis 等数据源的数据并没有在核心 Spark Streaming API 中, 你需要添加对应的组件包 `spark-streaming-xyz-2.11` 到依赖中, 如下是一些常见的示例
 
 |Source|Artifact|
@@ -109,11 +112,14 @@ $ ./bin/run-example streaming.NetworkWordCount localhost 9999
 |Kafka|spark-streaming-kafka-0-8_2.11|
 |Flume|spark-streaming-flume_2.11|
 |Kinesis|spark-streaming-kinesis-asl_2.11 [Amazon Software License]|
+
 最新列表, 请参考 [Maven repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.spark%22%20AND%20v%3A%222.2.0%22) 以获得支持的所有源和组件列表
-- 初始化 SparkContext
+- **初始化 SparkContext**    
 为了初始化一个 Spark Streaming 程序, 需要创建一个 StreamingContext 的实例, 它是所有 Spark Streaming 功能的主入点
+  - Python
   - Scala
   - Java
+
   可以从 [SparkConf](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.SparkConf) 实例中创建一个 [JavaStreamingContext](https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.streaming.StreamingContext)
 
   ```
@@ -132,31 +138,30 @@ $ ./bin/run-example streaming.NetworkWordCount localhost 9999
   JavaSparkContext sc = ...   //existing JavaSparkContext
   JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.seconds(1));
   ```
-  - Python
-
   在一个 `context` 被创建后, 你需要做如下的事
     - 通过创建输入 DStreams 定义输入源
     - 通过应用转换和在 DStreams 上的输出操作定义流计算
     - 使用 `streamingContext.start()` 开始接受数据并处理
     - 使用 `streamingContext.awaitTermination` 等待处理停止 (手动或由于任何错误)
     - 处理过程可以通过使用 `streamingContext.stop()` 手动的停止
+
   **记忆要点:**
     - 一旦一个 `context` 被启动, 不能有新的流计算被设置或加入它
     - 一旦一个 `context` 上下文被停止, 它不能被重新启动
     - 在同一时间只能有一个活跃的 `StreamingContext` 在一个 JVM 上
     - 在 `StreamingContext` 调用 `stop()` 同时也停止了 `SparkContext`; 为了仅停止 `StreamingContext`, 需设置 `stop()` 的可选参数 `stopSparkContext` 为 `false`
     - 一个 `SparkContext` 可以被复用去创建多个 `StreamingContext`, 只要在创建下一个 `StreamingContext` 前上一个 `StreamingContext` 被停止了 (没有停止 `SparkContext`)
-- 离散流 (DStreams)
-- 输入 DStreams 和 接收器
-- DStreams 的转换
-- DStreams 的输出操作
-- 数据帧和 SQL 操作
-- MLlib 操作
-- 缓存 / 持久化
-- 检查点
-- 累加器, 广播变量, 检查点
-- 部署应用
-- 监控应用
+- **离散流 (DStreams)**
+- **输入 DStreams 和 接收器**
+- **DStreams 的转换**
+- **DStreams 的输出操作**
+- **数据帧和 SQL 操作**
+- **MLlib 操作**
+- **缓存 / 持久化**
+- **检查点**
+- **累加器, 广播变量, 检查点**
+- **部署应用**
+- **监控应用**
 
 ### 性能调节
 - 减少批处理时间
