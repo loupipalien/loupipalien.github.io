@@ -167,10 +167,9 @@ Spark Streaming 提供两种内置的流数据源类型
   在接下来的这个章节我们将继续讨论在每个类别中的一些典型数据源
   注意, 如果你想在你的流应用中并行接受多个数据流, 你可以创建多个输入 DStream (将在后续的 [性能调优](#) 讨论); 这将会创建多个接受者, 它们将同时的接受多个数据流; 但需要注意, 一个 Spark worker/executor 是一个长期运行的任务, 这样它会占用分配给 Spark Streaming 应用的一个内核; 因此, 记住一个 Spark Streaming 应用需要被分配足够的内核 (或者线程, 如果在本地运行) 去处理接受到的数据是非常重要的, 以及运行的接收者
 **记忆要点**
-  - 当在本地运行一个 Spark Streaming 程序, 不要使用 "local" 或者 "local[1]" 作为 master URL, 因为无论哪一个都意味着对于本地运行的任务仅使用一个线程; 如果你基于一个接受者 (例如: 套接字, Kafka, Flume 等) 使用一个输入 DStream, 这样单线程将被用于运行接受者, 而没有线程用于处理接受的数据; 因此, 当在本地运行时总是使用 "local[n]" 作为 master URL, 这里的 n 大于运行中的接受者的数量 (如何设置 master 见 [Spark Properties](https://spark.apache.org/docs/latest/configuration.html#spark-properties))
+  - 当在本地运行一个 Spark Streaming 程序, 不要使用 "local" 或者 "local[1]" 作为 master URL, 因为无论哪一个都意味着对于本地运行的任务仅使用一个线程; 如果你基于一个接受者 (例如: 套接字, Kafka, Flume 等) 使用一个输入 DStream, 这样单线程将被用于运行接受者, 而没有线程用于处理接受的数据; 因此, 当在本地运行时总是使用 "local[n]" 作为 master URL, 这里的 n 大于运行中的接受者的数量 (如何设置 master 见 [Spark Properties](https://spark.apache.org/docs/latest/configuration.html#spark-properties))  
   - 拓展在集群上运行的逻辑, 分配给 Spark Streaming 应用的内核数必须大于接受者的数量, 否则系统将只接受数据而不能够处理它
-
-  - 基础数据源
+  - 基础数据源  
   我们早已在 [一个简单的例子](#) 中看到 `ssc.socketTextStream(...)` 创建了一个通过 TCP 套接字链接接受文本数据的 DStream; 除了套接字, StreamingContext API 提供了将文件作为输入源创建 DStream 的方法,
     - 文件流: 对于读取在任何兼容 HDFS API 文件系统 (HDFS, S3, NFS) 上的文件, DStream 可以这样创建
       - Python
@@ -189,7 +188,7 @@ Spark Streaming 提供两种内置的流数据源类型
     - 基于自定义接收器的流: 可以通过自定义接收器接受的数据创建 DStream, 更多细节见 [Custom Receiver Guide](http://spark.apache.org/docs/latest/streaming-custom-receivers.html)
     - RDDs 队列作为 DStream: 为了使用测试数据测试一个 Spark Streaming 应用, 可以使用 `streamingContext.queueStream(queueOfRDDs)` 基于 RDDs 队列创建 DStream; 每个被压入队列的 RDD 将会被作为在 DStream 中一批次数据, 并且如同一个流被处理
   关于套接字和文件的更多细节, 见 Scala 的 `StreamingContext`, Java 的 `JavaStreamingContext`, Python 的 `StreamingContext` 中相关功能的 API 文档
-  - 高阶数据源
+  - 高阶数据源  
   `Pyhton API:` 在 Spark 2.2.0 中 Kafka, Flume, Kinesis 在 Python API 中是可用的
   这种数据源需要和额外的非 Spark 库交互, 其中一些有着复杂的依赖 (例如: Kafka, 和 Flume); 因此, 为了最小化关于依赖版本冲突的问题, 从这些源创建 Dstream 的功能已被移到独立的库, 当需要时可以显示指定去连接
   注意, 这些高级数据源在 Spark shell 中是没有的, 因此基于这写高级数据源的应用不能再 shell 中测试; 如果你真的想在 Spark shell 中使用它们, 你需要下载对应的 Maven 组件 Jar 以及它的依赖, 然后添加到 classpath 中
@@ -197,7 +196,7 @@ Spark Streaming 提供两种内置的流数据源类型
     - Kafak: Spark Streaming 2.2.0 与 Kafka broker 0.8.2.1 或更高版本兼容, 更多细节见 [Kafka Integration Guide](http://spark.apache.org/docs/latest/streaming-kafka-integration.html)
     - Flume: Spark Streaming 2.2.0 与 Flume 1.6.0 兼容, 更多细节见 [Flume Integration Guide](http://spark.apache.org/docs/latest/streaming-flume-integration.html)
     - Kinesis: Spark Streaming 2.2.0 与 Kinesis Client Library 1.2.1 兼容, 更多细节见 [Flume Integration Guide](http://spark.apache.org/docs/latest/streaming-kinesis-integration.html)
-  - 自定义数据源
+  - 自定义数据源  
   `Pyhton API:` 在 Python 中还不被支持
   输入 DStream 可以从自定义的数据源创建; 你所需要做的是实现一个自定义的**接收器** (在下一章节中了解它什么), 它可以从自定义源接受数据并推向 Spark, 更多细节见 [Custom Receiver Guide](http://spark.apache.org/docs/latest/streaming-custom-receivers.html)
   - 接收器的可靠性
