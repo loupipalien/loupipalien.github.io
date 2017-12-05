@@ -209,6 +209,7 @@ Spark Streaming 提供两种内置的流数据源类型
 |Transformation|Meaning|
 |-|-|
 |map(func)|将源 DStream 中的每个元素通过一个函数 func 返回一个新的 DStream|
+|flatMap(func)|类似于map, 但是每个输入项可以映射到0或多个的输出项|
 
 - **DStreams 的输出操作**
 - **数据帧和 SQL 操作**
