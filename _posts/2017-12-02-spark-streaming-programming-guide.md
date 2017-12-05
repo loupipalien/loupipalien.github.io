@@ -204,6 +204,12 @@ Spark Streaming 提供两种内置的流数据源类型
     - 可靠接收器: 当数据源被接受并存储在 Spark 应用中, 可靠数据源正确的发送确认信息到可靠数据源
     - 非可靠接收器: 非可靠接收器将不会发送确认信息给数据源; 这可被用于不支持确认的数据源, 或当可靠数据源不想确认, 或需要去进行复杂的确认
 - **DStreams 的转换**
+类似于 RDDs, 转换允许来于输入 DStream 的数据被修改, 在通常的 Spark RDDs 上支持许多 DStream 的转换; 其中常见的如下
+
+|Transformation|Meaning|
+|-|-|
+|map(func)|将源 DStream 中的每个元素通过一个函数 func 返回一个新的 DStream|
+
 - **DStreams 的输出操作**
 - **数据帧和 SQL 操作**
 - **MLlib 操作**
