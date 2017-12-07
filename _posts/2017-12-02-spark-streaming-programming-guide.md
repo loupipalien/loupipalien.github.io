@@ -203,7 +203,7 @@ Spark Streaming 提供两种内置的流数据源类型
   基于可靠性可以分为两种数据源; 允许被传输的数据被确认数据源 (例如: Kafka 和 Flume), 如果从这些可靠数据源接受数据的系统可以正确的确认接受的数据, 它可以确保不会由于任何失败而丢失数据; 这分为两种接受器
     - 可靠接收器: 当数据源被接受并存储在 Spark 应用中, 可靠数据源正确的发送确认信息到可靠数据源
     - 非可靠接收器: 非可靠接收器将不会发送确认信息给数据源; 这可被用于不支持确认的数据源, 或当可靠数据源不想确认, 或需要去进行复杂的确认
-- **DStreams 的转换**
+- **DStreams 的转换**  
 类似于 RDDs, 转换允许来于输入 DStream 的数据被修改, 在通常的 Spark RDDs 上支持许多 DStream 的转换; 其中常见的如下
 
 |Transformation|Meaning|
@@ -223,7 +223,7 @@ Spark Streaming 提供两种内置的流数据源类型
 |updateStateByKey(func)|-|
 
 其中小部分的转换操作只能详细的讨论
-  - UpdateStateByKey 操作
+  - UpdateStateByKey 操作  
   `updateStateByKey` 操作允许你维护任意的状态同时持续的使用新的信息更新它; 为了做到这个, 你需要进行一下两步
     - 定义状态: 这个状态可以使任意的数据类型
     - 定义状态更新操作: 指定一个如何使用之前的状态和输入流中的新值更新状态的函数
@@ -245,7 +245,7 @@ Spark Streaming 提供两种内置的流数据源类型
     ```
     这个更新函数将会在每个单词上调用, `newValues` 是 1 的序列 (由 `(word, 1)` 键值对组成), 并且 `runningCount` 是之前的统计; 完整的 Java 代码见示例 [JavaStatefulNetWorkWordCount.java](https://github.com/apache/spark/blob/v2.2.0/examples/src/main/java/org/apache/spark/examples/streaming/JavaStatefulNetworkWordCount.java)
   注意, 使用 `updateStateByKey` 要求配置检查点目录, 将会在 [检查点](http://spark.apache.org/docs/latest/streaming-programming-guide.html#checkpointing) 章节详细讨论
-  - Transform 操作
+  - Transform 操作  
   `transform` 操作 (以及它的衍生如 `transformWith`) 允许任意的 RDD-to-RDD 函数被应用在 DStream 上; 它可以被用于任何未在 DStream API 中暴露的 RDD 操作; 例如, 在数据流中的每个批次中加入另一个数据集的功能没有直接的暴露在 DStream API 中; 然而, 你可以容易的使用 `transform` 去做, 这开放了非常强大功能的可能性; 例如, 通过加入预处理的大量信息 (也可能是 Spark 生成的) 到输入流中来做实时数据清洗然后基于此过滤
     - Python
     - Scala
@@ -262,7 +262,7 @@ Spark Streaming 提供两种内置的流数据源类型
     ```
     注意, 应用的操作会在每个批次间隔中被调用, 这允许你做时变性的 RDD 操作, 即 RDD 操作, 分区数量, 广播变量等可以在批次间改变
   - Window 操作
-  
+
 - **DStreams 的输出操作**
 - **数据帧和 SQL 操作**
 - **MLlib 操作**
