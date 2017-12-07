@@ -249,7 +249,7 @@ Spark Streaming 提供两种内置的流数据源类型
   `transform` 操作 (以及它的衍生如 `transformWith`) 允许任意的 RDD-to-RDD 函数被应用在 DStream 上; 它可以被用于任何未在 DStream API 中暴露的 RDD 操作; 例如, 在数据流中的每个批次中加入另一个数据集的功能没有直接的暴露在 DStream API 中; 然而, 你可以容易的使用 `transform` 去做, 这开放了非常强大功能的可能性; 例如, 通过加入预处理的大量信息 (也可能是 Spark 生成的) 到输入流中来做实时数据清洗然后基于此过滤
     - Python
     - Scala
-    - Java
+    - Java  
     ```
     import org.apache.spark.streaming.api.java.*;
     // RDD containing spam information
