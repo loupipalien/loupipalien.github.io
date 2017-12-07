@@ -210,7 +210,59 @@ Spark Streaming 提供两种内置的流数据源类型
 |-|-|
 |map(func)|将源 DStream 中的每个元素通过一个函数 func 返回一个新的 DStream|
 |flatMap(func)|类似于map, 但是每个输入项可以映射到0或多个的输出项|
+|filter(func)|返回一个新的 DStream, 仅包含通过 func 函数为 true 的源 DStream 中的记录|
+|repartition(numPartitions)|通过创建更多或更少的分区改变此 DStream 的并行度|
+|union(otherDStream)|返回一个新的 DStream, 包含源 DStream 和 otherDStream 的中并集元素|
+|count()|通过统计在源 DStream 中每个 RDD 的元素个数, 返回一个单元素 RDDs 的新的 DStream|
+|reduce(func)|使用一个函数 func (使用两个参数并有返回值) 聚合源 Dstream 的每个 RDD 中的每个元素, 返回一个单元素的 RDDs 的新的 DStream; 这个函数应该满足结合性和交换性, 以便可以并行计算|
+|countByValue()|当在一个元素是 K 类型的 Dstream 调用时返回一个关于 (K, Long) 键值对的 DStream, 其中每个键对应的值是在源 Dstream 的每个 RDDs 中的总次数|
+|reduceByKey(func, [numTasks])|-|
+|join(otherDStream, [numTasks])|-|
+|cogroup(otherDStream, [numTasks])|-|
+|transform(func)|-|
+|updateStateByKey(func)|-|
 
+其中小部分的转换操作只能详细的讨论
+  - UpdateStateByKey 操作
+  `updateStateByKey` 操作允许你维护任意的状态同时持续的使用新的信息更新它; 为了做到这个, 你需要进行一下两步
+    - 定义状态: 这个状态可以使任意的数据类型
+    - 定义状态更新操作: 指定一个如何使用之前的状态和输入流中的新值更新状态的函数
+  在每个批次中, Spark 将会位所有存在的键应用状态更新函数, 无论它们是否在一个批次中有新的数据; 如果状态更新函数返回 `None` 这个键值对将会被移除
+  让我们以一个例子在阐述这一点; 假设你想维护在一个文本数据流中已处理过的每个词的运行统计, 这里运行统计是一个状态并且是一个整数, 我们定义个更新函数如下
+    - Python
+    - scala
+    - Java
+    ```
+    Function2<List<Integer>, Optional<Integer>, Optional<Integer>> updateFunction =
+    (values, state) -> {
+      Integer newSum = ...  // add the new values with the previous running count to get the new count
+      return Optional.of(newSum);
+    };
+    ```
+    这里应用于一个包含单词的 DStream 上 (假设在 [入门示例](http://spark.apache.org/docs/latest/streaming-programming-guide.html#a-quick-example) 中这个 `pairs` 是包含 `(word, 1)` 键值对的 DStream)
+    ```
+    JavaPairDStream<String, Integer> runningCounts = pairs.updateStateByKey(updateFunction);
+    ```
+    这个更新函数将会在每个单词上调用, `newValues` 是 1 的序列 (由 `(word, 1)` 键值对组成), 并且 `runningCount` 是之前的统计; 完整的 Java 代码见示例 [JavaStatefulNetWorkWordCount.java](https://github.com/apache/spark/blob/v2.2.0/examples/src/main/java/org/apache/spark/examples/streaming/JavaStatefulNetworkWordCount.java)
+  注意, 使用 `updateStateByKey` 要求配置检查点目录, 将会在 [检查点](http://spark.apache.org/docs/latest/streaming-programming-guide.html#checkpointing) 章节详细讨论
+  - Transform 操作
+  `transform` 操作 (以及它的衍生如 `transformWith`) 允许任意的 RDD-to-RDD 函数被应用在 DStream 上; 它可以被用于任何未在 DStream API 中暴露的 RDD 操作; 例如, 在数据流中的每个批次中加入另一个数据集的功能没有直接的暴露在 DStream API 中; 然而, 你可以容易的使用 `transform` 去做, 这开放了非常强大功能的可能性; 例如, 通过加入预处理的大量信息 (也可能是 Spark 生成的) 到输入流中来做实时数据清洗然后基于此过滤
+    - Python
+    - Scala
+    - Java
+    ```
+    import org.apache.spark.streaming.api.java.*;
+    // RDD containing spam information
+    JavaPairRDD<String, Double> spamInfoRDD = jssc.sparkContext().newAPIHadoopRDD(...);
+
+    JavaPairDStream<String, Integer> cleanedDStream = wordCounts.transform(rdd -> {
+      rdd.join(spamInfoRDD).filter(...); // join data stream with spam information to do data cleaning
+      ...
+    });
+    ```
+    注意, 应用的操作会在每个批次间隔中被调用, 这允许你做时变性的 RDD 操作, 即 RDD 操作, 分区数量, 广播变量等可以在批次间改变
+  - Window 操作
+  
 - **DStreams 的输出操作**
 - **数据帧和 SQL 操作**
 - **MLlib 操作**
