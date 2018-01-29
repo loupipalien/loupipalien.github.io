@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Hadoop 的 HttpFS 安装"
+title: "如何安装 HttpFS"
 date: "2018-01-29"
-description: "Hadoop 的 HttpFS 安装"
-tag: [Hadoop, httpfs]
+description: "如何安装 HttpFS"
+tag: [hadoop, httpfs]
 ---
 
 > 本文主要叙述在伪认证的 Hadoop 集群上快速安装伪认证的 HttpFS  
@@ -57,9 +57,25 @@ $ curl -sS 'http://<HTTPFSHOSTNAME>:14000/webhdfs/v1?op=gethomedirectory&user.na
 - HTTPFS_LOG
 
 ### HttpFS 配置项
+以下是在 HttpFS 配置脚本 etc/hadoop/httpfs-site.xml 中所支持的配置项
 |name|value|description|
 |-|-|-|
 |httpfs.buffer.size|4096|当有 HDFS 的数据流时, 读写请求使用的缓存大小|
+|httpfs.services|	org.apache.hadoop.lib.service.instrumentation.InstrumentationService, org.apache.hadoop.lib.service.scheduler.SchedulerService, org.apache.hadoop.lib.service.security.GroupsService, org.apache.hadoop.lib.service.hadoop.FileSystemAccessService|httpfs 服务器所使用的服务类|
+|kerberos.realm|LOCALHOST|-|
+|httpfs.hostname|${httpfs.http.hostname}|-|
+|httpfs.authentication.signature.secret.file|	${httpfs.config.dir}/httpfs-signature.secret|-|
+|httpfs.authentication.type|simple|-|
+|httpfs.authentication.kerberos.principal|HTTP/${httpfs.hostname}@${kerberos.realm}|-|
+|httpfs.authentication.kerberos.keytab|${user.home}/httpfs.keytab|-|
+|httpfs.delegation.token.manager.update.interval|86400|-|
+|httpfs.delegation.token.manager.max.lifetime|604800|-|
+|httpfs.delegation.token.manager.renewal.interval|86400|-|
+|httpfs.hadoop.authentication.type|simple|-|
+|httpfs.hadoop.authentication.kerberos.keytab|${user.home}/httpfs.keytab|-|
+|httpfs.hadoop.authentication.kerberos.principal|	${user.name}/${httpfs.hostname}@${kerberos.realm}|-|
+|httpfs.hadoop.filesystem.cache.purge.frequency|60|-|
+|httpfs.hadoop.filesystem.cache.purge.timeout|60|-|
 
 ### HttpFS 使用 Https (SSL)
 为了配置 HttpFS 工作在 SSL 之上, 编辑配置目录中的 httpfs-env.sh 脚本, 将 HTTPFS_SSL_ENABLED 设置为 true; 另外, 以下两个属性也需要被定义 (以下是展示是默认属性):  
@@ -71,3 +87,7 @@ $ keytool -genkey -ailas tomcat -keyalg RSA
 ```
 你需要在交互窗口中回答一系列的问题, 这将会在 httpfs 用户的家目录下创建名为 .keystore 的 keystore 文件; 对 "keystore password" 输入的密码, 必须和配置目录中的 httpfs-env.sh 文件中设置的 HTTPFS_SSL_KEYSTORE_PASS 环境变量的值相同; 对于 "What is your first and last name?" 的答案必须是 HttpFS 服务器运行所在机器的 hostname; 启动 HttpFS, 将会使用 Https; 在使用 Hadoop 文件系统的 API 或者 Hadoop 文件系统的 shell 时, 需要使用 swedhdfs:// 空间; 如果使用自签名证书, 需要确保 JVM 可以找的到包含 SSL 证书公钥的 truststore  
 注意: 一些老的 SSL 客户端可能使用不被 HttpFS 支持的弱密码, 推荐升级 SSL 客户端
+
+>**参考:**  
+[Hadoop HDFS over HTTP - Server Setup](http://hadoop.apache.org/docs/r2.7.5/hadoop-hdfs-httpfs/ServerSetup.html)  
+[HttpFS Configuration Properties](http://hadoop.apache.org/docs/r2.7.5/hadoop-hdfs-httpfs/httpfs-default.html)
