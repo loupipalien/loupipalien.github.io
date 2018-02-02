@@ -6,7 +6,10 @@ description: "如何安装 HttpFS"
 tag: [hadoop, httpfs]
 ---
 
-> 本文主要叙述在伪认证的 Hadoop 集群上快速安装伪认证的 HttpFS  
+**前提假设:** 了解 Hadoop, 并搭建了 Hadoop 集群
+**环境:** CentOS-6.8-x86_64, hadoop-2.7.3
+
+本文主要叙述在伪认证的 Hadoop 集群上快速安装伪认证的 HttpFS  
 
 ### 安装 HttpFS
 ```
