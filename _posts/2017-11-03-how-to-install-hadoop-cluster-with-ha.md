@@ -220,11 +220,13 @@ for i in 02 03 04 05 06 07 08 09 10
         scp -r ${HADOOP_HOME} test${i}:${HADOOP_HOME}
     done
 ```
+
 ### 格式化
-- 格式化 NameNode (在 test01 上进行)
-`hdfs namenode -format`, 格式化后会在根据 core-site.xml 中的 hadoop.tmp.dir 配置生成数据, 将对应文件夹拷贝到 test02 对应目录
-- 格式化 ZooKeeper (在 test01 上进行)
-`hdfs zkfc -formatZK`, 这是为了在 ZooKeeper 中创建 hadoop-ha 的节点
+- 格式化 NameNode
+在格式化之前需要启动 JournalNode 服务 (在 test03, test04, test05 上进行), 执行语句 `${HADOOP_HOME}/sbin/hadoop-daemon.sh start journalnode`; 接下来格式化数据, 在 test01 上执行语句 `${HADOOP_HOME}/sbinhdfs namenode -format`,
+格式化后会在根据 core-site.xml 中的 hadoop.tmp.dir 配置生成数据, 将对应文件夹拷贝到 test02 对应目录
+- 格式化 ZooKeeper
+在格式化之前需要启动 ZooKeeper 服务 (在 test03, test04, test05 上进行), 执行语句 `${ZOOKEEPER_HOME}/bin/zkServer.sh start`; 在 test01 上执行语句 `hdfs zkfc -formatZK`, 这是为了在 ZooKeeper 中创建 hadoop-ha 的节点
 
 ### 启动服务
 - 启动 HDFS
