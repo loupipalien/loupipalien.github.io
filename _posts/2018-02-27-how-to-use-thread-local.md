@@ -63,7 +63,7 @@ public class ThreadLocalDemo {
 
 #### 设计思想
 - ThreadLocal 仅仅是一个变量的访问入口, 并不存放变量的值
-- 每个 Thread 对象都用一个 ThreadLocalMap 对象, 这个 ThreadLocalMap 对象持有 ThreadLocal 的引用
+- 每个 Thread 对象都有一个 ThreadLocalMap 对象, 这个 ThreadLocalMap 对象持有 ThreadLocal 的引用
 - ThreadLocalMap 以 ThreadLocal 对象为 key, 以真正需要存储对象为 value; get 时通过 ThreadLocal 对象先获取当前线程的 ThreadLocalMap 对象, 再以自己为 key 获取 value
 
 其实 ThreadLocal 可以设计一个形如 Map<Thread, V> 的容器形式, 一个线程对应一个存储对象, 但 ThreadLocal 这样设计的好处是
