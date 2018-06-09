@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "在 Windows 上运行 MapReduce 的 Word Count"
+title: "在 Windows 上运行 Local 模式的 MapReduce 的 Word Count"
 date: "2018-04-25"
-description: "在 Windows 上运行 MapReduce 的 Word Count"
+description: "在 Windows 上运行 Local 模式的 MapReduce 的 Word Count"
 tag: [hadoop, mapreduce]
 ---
 
@@ -15,27 +15,27 @@ tag: [hadoop, mapreduce]
 ```
 public class WordCount {
 
-	//map内部类
+	// map 内部类
 	public static class WCMapper extends Mapper<LongWritable, Text, Text, LongWritable>{
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
-			//取得每一行，并将其按空格分隔成数组
+			// 取得每一行，并将其按空格分隔成数组
 			String line = value.toString();
 			String[] words = line.split(" ");
-			//将每一行按空格切割，并将word作为key,1作为value传入context作为下一步reduce的输入
+			// 将每一行按空格切割，并将 word 作为 key, 1 作为 value 传入 context 作为下一步 reduce 的输入
 			for (String word : words) {
 				context.write(new Text(word), new LongWritable(1));
 			}
 		}
 	}
 
-	//reduce内部类
+	// reduce 内部类
 	public static class WCReducer extends Reducer<Text, LongWritable, Text, LongWritable>{
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
 				Context context) throws IOException, InterruptedException {
-			//计数器
+			// 计数器
 			long counter = 0;
 			for (LongWritable value : values) {
 				counter += value.get();
@@ -56,7 +56,7 @@ public class WordCount {
 		// 取得一个作业实例
 		Job job = Job.getInstance(conf);
 
-		// 设置WordCount.class的路径
+		// 设置 WordCount.class 的路径
 		job.setJarByClass(WordCount.class);
 
 		// 设置mapper，以及mapper的key,value的class
@@ -66,7 +66,7 @@ public class WordCount {
 		// 将要计算的数据传入作业
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 
-		// 设置reducer,以及reducer的key，value的class
+		// 设置 reducer,以及 reducer 的 key, value 的 class
 		job.setReducerClass(WCReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(LongWritable.class);
