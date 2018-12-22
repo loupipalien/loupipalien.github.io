@@ -20,8 +20,8 @@ appenderName就是指定日志信息输出到哪个地方, 可同时指定多个
 `log4j.logger.com.ltchen.demo.log4j = [level],appenderName,appenderName2,...`  
 `log4j.logger.com.ltchen.demo.log4j.App = [level],appenderName,appenderName2,...`  
 对于包或类Logger, 还可设置additivity属性。标志子Logger是否继承父Logger的appender。默认情况下子Logger会继承父Logger的appender, 也就是说子Logger会在父Logger的appender里输出。若是additivity设为false, 则子Logger只会在自己的appender里输出, 而不会在父Logger的appender里输出。  
-`log4j.additivity.timer.com.ltchen.demo.log4j = false`  
-`log4j.additivity.timer.com.ltchen.demo.log4j.App = false`  
+`log4j.additivity.com.ltchen.demo.log4j = false`  
+`log4j.additivity.com.ltchen.demo.log4j.App = false`  
 
 ### Appender (负责指定日志的输出地)
 Appender用于指定各Looger的日志输出地, 通用语法如下  
