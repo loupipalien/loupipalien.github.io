@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Argo 快速入门"
+title: "Argo 入门"
 date: "2019-04-26"
-description: "Argo 快速入门"
+description: "Argo 入门"
 tag: [argo, kubernates]
 ---
 
-### Argo 快速入门
+### Argo 入门
 前提要求
 - 安装 Kubernates 1.9 或以上 (可以安装 Minikube, 本文操作即在 Minikube 上完成)
 - 安装 kubectl
