@@ -19,6 +19,10 @@ set tez.queue.name = root.default;
 ### 指定 mapreduce 作业名
 set mapreduce.job.name = job_name_example;
 
+### 设置查询表时表所在目录可递归, tez 引擎会设置为 true, mr 引擎则不会
+mapred.input.dir.recursive = true;
+mapreduce.input.fileinputformat.input.dir.recursive = true;
+
 ### 设置查询结果集文件格式  
 set hive.query.result.fileformat = [textfile, sequencefile, rcfile, llap]
 
@@ -47,7 +51,7 @@ hive.conf.restricted.list
 ### 运行时对于用户隐藏的配置项
 hive.conf.hidden.list
 
-### HIve 运行时对内使用的配置项
+### Hive 运行时对内使用的配置项
 hive.conf.internal.variable.list
 
 ###

@@ -1,12 +1,10 @@
 ---
 layout: post
-title: "Linux 中字符串的操作"
+title: "Shell 中字符串的操作"
 date: "2018-05-31"
-description: "Linux 中字符串的操作"
+description: "Shell 中字符串的操作"
 tag: [shell, linux]
 ---
-
-**环境:** CentOS-7.5-x86_64
 
 ###
 
