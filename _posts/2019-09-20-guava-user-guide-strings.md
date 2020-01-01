@@ -28,7 +28,7 @@ Splitter.on(',')
         .omitEmptyStrings()
         .split("foo,bar,,   qux");
 ```
-上述代码返回 `Iterable<String>`, 其中包含 `"foo", "bar", "qux"`。Splitter可以被设置为按照任何模式, 字符, 字符串或字符匹配器拆分  
+上述代码返回 `Iterable<String>`, 其中包含 `"foo", "bar", "qux"`; Splitter可以被设置为按照任何模式, 字符, 字符串或字符匹配器拆分  
 
 ##### 拆分器工厂
 
